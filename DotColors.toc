@@ -3,9 +3,10 @@
 ## Notes: Colored damage numbers per Warlock DoT.
 ## Notes-deDE: Farbige Schadenszahlen pro Hexenmeister-DoT.
 ## Author: RiFrost
-## Version: 0.5.0
+## Version: @project-version@
 ## X-License: MIT
 ## X-Website: https://github.com/RiFrost/DotColors
+## X-Curse-Project-ID: 1827081
 ## SavedVariables: DotColorsDB
 ## IconTexture: Interface\AddOns\DotColors\Media\Icon
 ## AddonCompartmentFunc: DotColors_OnAddonCompartmentClick

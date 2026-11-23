@@ -15,10 +15,14 @@ local L = ns.L
 
 ns.ADDON = ADDON
 
--- The version lives only in the .toc file.
+-- The version comes from the git tag: the packager writes it into the .toc.
+-- A copy straight from the repository still holds the "@...@" placeholder.
+-- The placeholder is not spelled out here, because the packager would replace it in this file too.
 ns.VERSION = (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata(ADDON, "Version"))
   or (GetAddOnMetadata and GetAddOnMetadata(ADDON, "Version"))
-  or "dev"
+if not ns.VERSION or ns.VERSION:sub(1, 1) == "@" then
+  ns.VERSION = "dev"
+end
 
 ns.DEFAULTS = {
   colors = {
