@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: DotColors
+## Notes: Eigene Schadenszahlen, eingefaerbt nach Warlock-DoT (Zuordnung ueber den Tick-Takt).
+## Author: DotColors
+## Version: 0.4
+## SavedVariables: DotColorsDB
+
+DotColors.lua
+DotColorsOptions.lua
