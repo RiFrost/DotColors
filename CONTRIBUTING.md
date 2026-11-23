@@ -90,6 +90,22 @@ DotColors uses [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`.
 
 Releases are tagged `vMAJOR.MINOR.PATCH`.
 
+## Releasing
+
+The version exists only as the git tag. The `.toc` holds the placeholder `@project-version@`, which the packager replaces.
+
+1. Move the entries under `## Unreleased` in `CHANGELOG.md` to a new heading `## X.Y.Z` and commit: `docs: changelog for X.Y.Z`.
+2. Create an annotated tag and push it:
+   ```
+   git tag -a vX.Y.Z -m "vX.Y.Z"
+   git push origin vX.Y.Z
+   ```
+3. The GitHub Action (`.github/workflows/release.yml`) runs the [BigWigs packager](https://github.com/BigWigsMods/packager). It builds `DotColors-vX.Y.Z.zip` as described in `.pkgmeta`, uploads it to CurseForge and creates a GitHub release.
+
+The tag decides the release type on CurseForge: `v1.2.0` is a release, `v1.2.0-beta1` a beta, `v1.2.0-alpha1` an alpha.
+
+The upload needs the repository secret `CF_API_TOKEN` (a CurseForge API token).
+
 ## Branches and pull requests
 
 - `main` always holds a working addon.
