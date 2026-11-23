@@ -1,9 +1,19 @@
 ## Interface: 16001
 ## Title: DotColors
-## Notes: Eigene Schadenszahlen, eingefaerbt nach Warlock-DoT (Zuordnung ueber den Tick-Takt).
-## Author: DotColors
-## Version: 0.4
+## Notes: Colored damage numbers per Warlock DoT.
+## Notes-deDE: Farbige Schadenszahlen pro Hexenmeister-DoT.
+## Author: RiFrost
+## Version: 0.5.0
+## X-License: MIT
+## X-Website: https://github.com/RiFrost/DotColors
 ## SavedVariables: DotColorsDB
 
-DotColors.lua
-DotColorsOptions.lua
+Locale.lua
+Core.lua
+Spells.lua
+Matcher.lua
+Display.lua
+Widgets.lua
+Options.lua
+Commands.lua
+Events.lua
