@@ -5,8 +5,7 @@
 local _, ns = ...
 local L = ns.L
 
--- Corruption's icon, until DotColors has its own.
-local ICON = "Interface\\Icons\\Spell_Shadow_AbominationExplosion"
+local ICON = "Interface\\AddOns\\DotColors\\Media\\Icon"
 local EDGE_OFFSET = 10  -- pixels outside the minimap's edge
 
 local button
@@ -66,9 +65,8 @@ function ns.createMinimapButton()
 
   local icon = button:CreateTexture(nil, "ARTWORK")
   icon:SetTexture(ICON)
-  icon:SetSize(17, 17)
-  icon:SetPoint("TOPLEFT", 7, -6)
-  icon:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+  icon:SetSize(21, 21)
+  icon:SetPoint("TOPLEFT", 5, -4)
 
   local border = button:CreateTexture(nil, "OVERLAY")
   border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
