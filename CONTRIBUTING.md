@@ -27,7 +27,7 @@ These are the rules this repository follows. They apply to everyone, including A
 
 ## Lua and WoW conventions
 
-- **Everything is `local`.** The only globals are the ones WoW requires: `SavedVariables` and `SLASH_*` / `SlashCmdList` entries.
+- **Everything is `local`.** The only globals are the ones WoW requires: `SavedVariables`, `SLASH_*` / `SlashCmdList` entries, and functions named in the `.toc` (such as `AddonCompartmentFunc`).
 - **Share code between files through the addon namespace** (`local ADDON, ns = ...`), never through globals.
 - **Indentation:** 2 spaces. No tabs.
 - **Naming:** `camelCase` for locals and functions, `UPPER_SNAKE_CASE` for constants, `PascalCase` only for frames created with a global name.
