@@ -123,6 +123,16 @@ L["Shows the anchor as a purple box. Drag it with the mouse, then lock it."] =
   "Zeigt den Anker als lila Kasten an. Mit der Maus ziehen, danach sperren."
 L["Back to center"] = "Zurück zur Mitte"
 
+L["Minimap"] = "Minikarte"
+L["Show minimap button"] = "Button an der Minikarte zeigen"
+L["The round button at the edge of the minimap. Drag it to move it along the edge."] =
+  "Der runde Button am Rand der Minikarte. Ziehen, um ihn am Rand zu verschieben."
+L["Left-click: open options"] = "Linksklick: Optionen öffnen"
+L["Right-click: preview"] = "Rechtsklick: Vorschau"
+L["Drag: move the button"] = "Ziehen: Button verschieben"
+L["Minimap button: %s"] = "Button an der Minikarte: %s"
+L["/dc minimap - minimap button"] = "/dc minimap - Button an der Minikarte"
+
 L["All settings are in DotColors' own window (also: /dc)."] =
   "Alle Einstellungen sind im eigenen Fenster von DotColors (auch: /dc)."
 L["Open DotColors options"] = "DotColors-Optionen öffnen"

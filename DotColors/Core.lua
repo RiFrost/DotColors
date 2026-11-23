@@ -45,6 +45,7 @@ ns.DEFAULTS = {
   riseHeight = 70,      -- pixels a number floats up
   anchorX = 0,
   anchorY = 120,
+  minimap = { show = true, angle = 200 },  -- angle in degrees around the minimap
   savedCVars = {},      -- Blizzard settings before we changed them, to restore them later
 }
 

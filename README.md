@@ -23,6 +23,7 @@ As a Warlock you have several DoTs ticking on the same target, and the default d
 - Optional spell icon next to each number
 - Hides Blizzard's own damage numbers so nothing shows twice
 - Options window to change colors, font size, display time, rise height and position
+- Minimap button and an entry in the AddOn menu (puzzle icon at the minimap)
 
 ## Installation
 
@@ -35,9 +36,11 @@ As a Warlock you have several DoTs ticking on the same target, and the default d
 
 ## Usage
 
-Type `/dc` to open the options window. It has four pages:
+Open the options window by clicking the DotColors button at the edge of the minimap, through the AddOn menu (puzzle icon), or by typing `/dc`. Right-click the minimap button for a preview of all colors; drag it to move it along the edge.
 
-- **General:** where numbers appear, icons, physical damage, hiding Blizzard's numbers
+The options window has four pages:
+
+- **General:** where numbers appear, icons, physical damage, hiding Blizzard's numbers, minimap button
 - **Display:** font size, display time, rise height
 - **Colors:** click a color to change it, Shift-click for a sample number, right-click to reset it
 - **Position:** move the fixed anchor used when no nameplate is visible
@@ -53,6 +56,7 @@ Type `/dc` to open the options window. It has four pages:
 | `/dc move` | Unlock the fixed anchor to drag it |
 | `/dc plates` | Toggle numbers above nameplates |
 | `/dc blizz` | Toggle hiding Blizzard's damage numbers (`/dc blizz status` shows details) |
+| `/dc minimap` | Show or hide the minimap button |
 | `/dc debug` | Write each hit and its detected spell to chat |
 | `/dc reset` | Reset all settings |
 | `/dc help` | List all commands |

@@ -22,6 +22,7 @@ end
 
 function handlers.PLAYER_LOGIN()
   ns.applyBlizzardNumbers()
+  ns.createMinimapButton()
   if ns.registerSettingsPanel then pcall(ns.registerSettingsPanel) end
   ns.print(L["Loaded. Type /dc for options."])
 end

@@ -74,6 +74,12 @@ function commands.color(argument, hex)
   end
 end
 
+function commands.minimap()
+  ns.db.minimap.show = not ns.db.minimap.show
+  ns.updateMinimapButton()
+  ns.print(string.format(L["Minimap button: %s"], ns.onOff(ns.db.minimap.show)))
+end
+
 function commands.debug()
   ns.db.debug = not ns.db.debug
   ns.print(string.format(L["Debug output in chat: %s"], ns.onOff(ns.db.debug)))
@@ -82,6 +88,7 @@ end
 function commands.reset()
   ns.resetSettings()
   ns.placeAnchor()
+  ns.updateMinimapButton()
   if ns.refreshOptions then ns.refreshOptions() end
   ns.print(L["Settings reset."])
 end
@@ -99,6 +106,7 @@ function commands.help()
     L["/dc physical - show physical damage"],
     L["/dc only - only recognized DoTs"],
     L["/dc blizz - hide Blizzard numbers (/dc blizz status: details)"],
+    L["/dc minimap - minimap button"],
     L["/dc debug - write each hit to chat"],
     L["/dc reset - reset all settings"],
   }) do

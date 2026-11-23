@@ -50,8 +50,19 @@ local function buildGeneralPage(page)
     end,
   }):SetPoint("TOPLEFT", LEFT, -218)
 
-  Widgets.heading(page, L["Troubleshooting"], 24, -256)
-  settingCheckbox(page, "debug", L["Write matches to chat"], L["Writes every hit and the DoT it was matched to into chat."], -280)
+  Widgets.heading(page, L["Minimap"], 24, -256)
+  form:checkbox(page, {
+    label = L["Show minimap button"],
+    tooltip = L["The round button at the edge of the minimap. Drag it to move it along the edge."],
+    get = function() return ns.db.minimap.show end,
+    set = function(value)
+      ns.db.minimap.show = value
+      ns.updateMinimapButton()
+    end,
+  }):SetPoint("TOPLEFT", LEFT, -280)
+
+  Widgets.heading(page, L["Troubleshooting"], 24, -318)
+  settingCheckbox(page, "debug", L["Write matches to chat"], L["Writes every hit and the DoT it was matched to into chat."], -342)
 end
 
 local function buildDisplayPage(page)
@@ -172,6 +183,7 @@ StaticPopupDialogs["DOTCOLORS_RESET"] = {
   OnAccept = function()
     ns.resetSettings()
     ns.placeAnchor()
+    ns.updateMinimapButton()
     ns.refreshOptions()
   end,
   timeout = 0,

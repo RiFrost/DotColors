@@ -7,6 +7,8 @@
 ## X-License: MIT
 ## X-Website: https://github.com/RiFrost/DotColors
 ## SavedVariables: DotColorsDB
+## IconTexture: Interface\Icons\Spell_Shadow_AbominationExplosion
+## AddonCompartmentFunc: DotColors_OnAddonCompartmentClick
 
 Locale.lua
 Core.lua
@@ -15,5 +17,6 @@ Matcher.lua
 Display.lua
 Widgets.lua
 Options.lua
+Minimap.lua
 Commands.lua
 Events.lua
