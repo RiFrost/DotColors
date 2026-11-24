@@ -20,26 +20,67 @@ ns.DOTS = {
   siphon     = { interval = 3, duration = 30, school = ns.SCHOOL.SHADOW },
 }
 
--- Spell names (English and German client) that start each DoT.
-ns.DOT_BY_SPELL_NAME = {
-  ["Corruption"] = "corruption",    ["Verderbnis"] = "corruption",
-  ["Bane of Agony"] = "agony",      ["Curse of Agony"] = "agony",
-  ["Bann der Pein"] = "agony",      ["Fluch der Pein"] = "agony",
-  ["Immolate"] = "immolate",        ["Feuerbrand"] = "immolate",
-  ["Siphon Life"] = "siphon",       ["Lebensentzug"] = "siphon",
+-- One spell ID per spell. Every rank has its own ID, but all ranks share
+-- the spell's name. So the name the game returns for one of these IDs,
+-- in the client's language, recognizes every rank in every language.
+-- Forever uses the classic spell IDs (6223, 6217, 2941 and 7815 were seen in game logs).
+
+-- Spells that start each DoT.
+local DOT_SPELL_IDS = {
+  corruption = 6223,
+  agony = 6217,
+  immolate = 2941,
+  siphon = 18265,
 }
 
 -- Pet spells whose hit arrives together with the pet's cast.
-ns.PET_HIT_BY_SPELL_NAME = {
-  ["Lash of Pain"] = "lash", ["Schmerzenspeitsche"] = "lash",
-  ["Firebolt"] = "petfire",  ["Feuerblitz"] = "petfire",
+local PET_SPELL_IDS = {
+  lash = 7815,     -- Lash of Pain (Succubus)
+  petfire = 3110,  -- Firebolt (Imp)
 }
 
 -- Channeled spells: every Shadow hit while channeling belongs to them.
-ns.CHANNELED_SPELL_NAMES = {
-  ["Drain Life"] = true, ["Blutsauger"] = true,
-  ["Drain Soul"] = true, ["Seelendieb"] = true,
+local CHANNELED_SPELL_IDS = {
+  689,   -- Drain Life
+  1120,  -- Drain Soul
 }
+
+-- Name lookups, filled by ns.loadSpellNames() once the game shares spell names.
+ns.DOT_BY_SPELL_NAME = {}
+ns.PET_HIT_BY_SPELL_NAME = {}
+ns.CHANNELED_SPELL_NAMES = {}
+
+--- The spell's name in the client's language, if the game shares it.
+function ns.spellName(spellID)
+  if C_Spell and C_Spell.GetSpellName then
+    return ns.safeCall(C_Spell.GetSpellName, spellID)
+  end
+  if GetSpellInfo then return ns.safeCall(GetSpellInfo, spellID) end
+end
+
+--- Adds the name of one spell ID to a lookup table.
+--- An ID the game doesn't know is reported in debug mode instead of failing silently.
+local function addSpellName(names, spellID, value)
+  local name = ns.spellName(spellID)
+  if name then
+    names[name] = value
+  else
+    ns.debug(string.format(L["Unknown spell ID %d"], spellID))
+  end
+end
+
+--- Fills the name lookups from the spell IDs above.
+function ns.loadSpellNames()
+  for kind, spellID in pairs(DOT_SPELL_IDS) do
+    addSpellName(ns.DOT_BY_SPELL_NAME, spellID, kind)
+  end
+  for kind, spellID in pairs(PET_SPELL_IDS) do
+    addSpellName(ns.PET_HIT_BY_SPELL_NAME, spellID, kind)
+  end
+  for _, spellID in ipairs(CHANNELED_SPELL_IDS) do
+    addSpellName(ns.CHANNELED_SPELL_NAMES, spellID, true)
+  end
+end
 
 -- Every hit type in display order, with its label and horizontal lane offset.
 -- Lanes keep numbers of different types from covering each other.

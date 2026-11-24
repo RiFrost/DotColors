@@ -29,14 +29,6 @@ function ns.enemyKey(unit)
   return "unit:" .. unit
 end
 
---- The spell's name in the client's language, if the game shares it.
-local function spellName(spellID)
-  if C_Spell and C_Spell.GetSpellName then
-    return ns.safeCall(C_Spell.GetSpellName, spellID)
-  end
-  if GetSpellInfo then return ns.safeCall(GetSpellInfo, spellID) end
-end
-
 --- The spell's icon texture, if the game shares it.
 local function spellIcon(spellID)
   if C_Spell and C_Spell.GetSpellTexture then
@@ -59,7 +51,7 @@ end
 --- Remembers a cast by the player on the current target.
 --- A DoT cast restarts that DoT's tick rhythm (confirmed in game logs).
 function ns.onPlayerCast(spellID)
-  local name = spellName(spellID)
+  local name = ns.spellName(spellID)
   local key = name and ns.enemyKey("target")
   if not key then return end
 
@@ -80,7 +72,7 @@ end
 
 --- Remembers a cast by the player's pet, so its hit can be matched.
 function ns.onPetCast(spellID)
-  local name = spellName(spellID)
+  local name = ns.spellName(spellID)
   local kind = name and ns.PET_HIT_BY_SPELL_NAME[name]
   if not kind then return end
   local key = ns.enemyKey("pettarget") or ns.enemyKey("target")
@@ -90,7 +82,7 @@ end
 
 --- Starts or stops treating Shadow hits as Drain Life / Drain Soul.
 function ns.onChannelStart(spellID)
-  local name = spellName(spellID)
+  local name = ns.spellName(spellID)
   if name and ns.CHANNELED_SPELL_NAMES[name] then
     channel = { enemy = ns.enemyKey("target"), icon = spellIcon(spellID) }
   end
