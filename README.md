@@ -22,7 +22,7 @@ As a Warlock you have several DoTs ticking on the same target, and the default d
 - Critical hits are shown larger
 - Optional spell icon next to each number
 - Hides Blizzard's own damage numbers so nothing shows twice
-- Options window to change colors, font size, display time, rise height and position
+- Options window to change colors, font size, display time, rise height, spacing and position
 - Minimap button and an entry in the AddOn menu (puzzle icon at the minimap)
 
 ## Installation
@@ -41,7 +41,7 @@ Open the options window by clicking the DotColors button at the edge of the mini
 The options window has four pages:
 
 - **General:** where numbers appear, icons, physical damage, hiding Blizzard's numbers, minimap button
-- **Display:** font size, display time, rise height
+- **Display:** font size, display time, rise height, spacing between spells
 - **Colors:** click a color to change it, Shift-click for a sample number, right-click to reset it
 - **Position:** move the fixed anchor used when no nameplate is visible
 
