@@ -16,6 +16,7 @@ local currentPage = 1
 local function integer(value) return tostring(math.floor(value + 0.5)) end
 local function seconds(value) return string.format("%.1f s", value) end
 local function pixels(value) return integer(value) .. " px" end
+local function percent(value) return integer(value) .. " %" end
 
 --- A checkbox for a simple on/off setting.
 local function settingCheckbox(page, key, label, tooltip, y)
@@ -71,6 +72,7 @@ local function buildDisplayPage(page)
     { key = "fontSize",   label = L["Font size"],    min = 8,   max = 40,  step = 1,   format = integer },
     { key = "duration",   label = L["Display time"], min = 0.6, max = 4,   step = 0.1, format = seconds },
     { key = "riseHeight", label = L["Rise height"],  min = 0,   max = 200, step = 5,   format = pixels },
+    { key = "laneSpacing", label = L["Spacing between spells"], min = 50, max = 250, step = 10, format = percent },
   }
   for i, s in ipairs(sliders) do
     form:slider(page, {
@@ -79,7 +81,10 @@ local function buildDisplayPage(page)
       set = function(value) ns.db[s.key] = value end,
     }):SetPoint("TOPLEFT", LEFT + 4, -98 - (i - 1) * 48)
   end
-  Widgets.note(page, L["Critical hits are shown larger automatically. Use \"Preview\" below to see the effect."], LEFT + 4, -240)
+  local spacingNote = Widgets.note(page, L["Each spell has its own column. Raise the spacing if numbers overlap."], LEFT + 4, -288)
+  local critNote = Widgets.note(page, L["Critical hits are shown larger automatically. Use \"Preview\" below to see the effect."], LEFT + 4, 0)
+  critNote:ClearAllPoints()
+  critNote:SetPoint("TOPLEFT", spacingNote, "BOTTOMLEFT", 0, -6)  -- follows the first note, however many lines it wraps to
 end
 
 local function buildColorsPage(page)

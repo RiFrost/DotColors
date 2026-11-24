@@ -103,6 +103,9 @@ L["Size and movement"] = "Größe und Bewegung"
 L["Font size"] = "Schriftgröße"
 L["Display time"] = "Anzeigedauer"
 L["Rise height"] = "Steighöhe"
+L["Spacing between spells"] = "Abstand zwischen Zaubern"
+L["Each spell has its own column. Raise the spacing if numbers overlap."] =
+  "Jeder Zauber hat eine eigene Spalte. Überlappen sich Zahlen, den Abstand erhöhen."
 L["Critical hits are shown larger automatically. Use \"Preview\" below to see the effect."] =
   "Krits werden automatisch größer dargestellt. Mit \"Vorschau\" unten siehst du die Wirkung sofort."
 

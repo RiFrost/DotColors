@@ -124,7 +124,8 @@ function ns.showNumber(kind, amount, isCrit, icon, attachTo)
 
   local now = GetTime()
   number.attachTo = attachTo or anchor
-  number.offsetX = ns.KIND_BY_KEY[kind] and ns.KIND_BY_KEY[kind].lane or 0
+  local lane = ns.KIND_BY_KEY[kind] and ns.KIND_BY_KEY[kind].lane or 0
+  number.offsetX = lane * ns.db.laneSpacing / 100
   number.offsetY = stackHeight(kind, now) * (size + 2)
   number.startTime = now
   number:SetAlpha(1)
