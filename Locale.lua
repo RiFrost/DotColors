@@ -47,6 +47,7 @@ L["Settings reset."] = "Einstellungen zurückgesetzt."
 L["%s | school %s | %s"] = "%s | Schule %s | %s"
 L[" (off by %.2fs)"] = " (Abw. %.2fs)"
 L["Error in %s: %s"] = "Fehler in %s: %s"
+L["Unknown spell ID %d"] = "Unbekannte Zauber-ID %d"
 
 -- Command help
 L["Commands:"] = "Befehle:"

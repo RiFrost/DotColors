@@ -6,6 +6,10 @@ All notable changes to DotColors are listed here. Versions follow [Semantic Vers
 
 First public release.
 
+### Changed
+
+- Spells are recognized by their spell ID, so DotColors works with every client language and every spell rank
+
 ### Added
 
 - Own floating damage numbers with a separate color for each Warlock DoT: Corruption, Bane of Agony, Immolate, Siphon Life, Lash of Pain and Drain Life / Drain Soul

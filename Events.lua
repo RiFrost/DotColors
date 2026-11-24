@@ -21,6 +21,7 @@ function handlers.ADDON_LOADED(name)
 end
 
 function handlers.PLAYER_LOGIN()
+  ns.loadSpellNames()  -- at login the game's spell data is sure to be ready
   ns.applyBlizzardNumbers()
   ns.createMinimapButton()
   if ns.registerSettingsPanel then pcall(ns.registerSettingsPanel) end
