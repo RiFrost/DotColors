@@ -9,7 +9,6 @@ local FONT = STANDARD_TEXT_FONT or "Fonts\\FRIZQT__.TTF"
 local CRIT_SCALE = 1.45        -- crits are drawn this much larger
 local FADE_START = 0.6         -- share of the display time after which a number fades out
 local START_OFFSET_Y = 12      -- numbers start this far above their anchor
-local STACK_WINDOW = 0.35      -- numbers in the same lane within this time stack upward
 local PREVIEW_STEP = 0.25      -- seconds between numbers in the preview
 
 ---------------------------------------------------------------------------
@@ -67,7 +66,8 @@ ns.setAnchorUnlocked(false)
 ---------------------------------------------------------------------------
 local unusedNumbers = {}
 local activeNumbers = {}
-local lastInLane = {}  -- kind -> { time, stack } to stack numbers that come close together
+-- attachTo frame -> lane offset -> { number, startTime }: the newest number in each column
+local newestInColumn = setmetatable({}, { __mode = "k" })
 
 --- A number frame from the pool, or a new one.
 local function acquireNumber()
@@ -85,13 +85,35 @@ local function acquireNumber()
   return number
 end
 
---- How many steps up a new number in this lane must start, so it
---- doesn't cover one that appeared just before.
-local function stackHeight(kind, now)
-  local last = lastInLane[kind]
-  local stack = (last and now - last.time < STACK_WINDOW) and last.stack + 1 or 0
-  lastInLane[kind] = { time = now, stack = stack }
-  return stack
+--- How far a number has risen above its anchor right now.
+local function currentHeight(number, now)
+  return number.offsetY + ns.db.riseHeight * (now - number.startTime) / ns.db.duration
+end
+
+--- The vertical start offset for a new number, so it keeps a gap to the newest
+--- number in the same column above the same enemy. That number has already
+--- risen a bit; if it is still too close, the new one starts lower. All numbers
+--- rise at the same speed, so the gap stays the same all the way up.
+--- Also remembers the new number as the column's newest.
+local function startOffset(number, attachTo, lane, size, now)
+  local columns = newestInColumn[attachTo]
+  if not columns then
+    columns = {}
+    newestInColumn[attachTo] = columns
+  end
+
+  local offset = 0
+  local newest = columns[lane]
+  -- The pool reuses frames, so check it is still the same, still visible number.
+  local stillShown = newest and newest.number.startTime == newest.startTime
+    and now - newest.startTime < ns.db.duration
+  if stillShown then
+    local gap = (newest.number.size + size) / 2 + ns.db.numberGap
+    offset = math.min(0, currentHeight(newest.number, now) - gap)
+  end
+
+  columns[lane] = { number = number, startTime = now }
+  return offset
 end
 
 --- The visible nameplate of a unit, if numbers should go there.
@@ -126,7 +148,8 @@ function ns.showNumber(kind, amount, isCrit, icon, attachTo)
   number.attachTo = attachTo or anchor
   local lane = ns.KIND_BY_KEY[kind] and ns.KIND_BY_KEY[kind].lane or 0
   number.offsetX = lane * ns.db.laneSpacing / 100
-  number.offsetY = stackHeight(kind, now) * (size + 2)
+  number.offsetY = startOffset(number, number.attachTo, lane, size, now)
+  number.size = size
   number.startTime = now
   number:SetAlpha(1)
   number:Show()
@@ -158,7 +181,7 @@ CreateFrame("Frame"):SetScript("OnUpdate", animateNumbers)
 --- Shows one sample number of every main color, above the target or at the anchor.
 function ns.showPreview()
   local attachTo = ns.nameplateFor("target")
-  local kinds = { "corruption", "agony", "immolate", "lash", "siphon", "drain", "shadow", "physical" }
+  local kinds = { "corruption", "agony", "immolate", "lash", "siphon", "drain", "wrack", "shadow", "physical" }
   for i, kind in ipairs(kinds) do
     C_Timer.After((i - 1) * PREVIEW_STEP, function()
       ns.showNumber(kind, 100 + i * 11, kind == "immolate", nil, attachTo)

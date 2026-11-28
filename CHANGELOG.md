@@ -2,6 +2,18 @@
 
 All notable changes to DotColors are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- Wrack (Affliction talent) gets its own color
+- Corruption, Bane of Agony and Siphon Life are still matched while Wrack makes them tick twice as fast
+- "Gap between stacked numbers" slider on the Display page
+
+### Fixed
+
+- Numbers in the same column no longer appear on top of each other: a new number starts below the previous one if that hasn't risen far enough yet
+
 ## 1.0.0 (2026-11-24)
 
 First public release.

@@ -33,6 +33,7 @@ ns.DEFAULTS = {
     lash       = { 1.00, 0.40, 0.75 }, -- pink
     petfire    = { 1.00, 0.70, 0.30 },
     drain      = { 0.40, 0.60, 1.00 }, -- blue
+    wrack      = { 0.95, 0.25, 0.35 }, -- crimson
     shadow     = { 0.65, 0.60, 0.80 },
     fire       = { 1.00, 0.85, 0.30 },
     physical   = { 0.85, 0.85, 0.85 },
@@ -48,6 +49,7 @@ ns.DEFAULTS = {
   duration = 1.6,       -- seconds a number stays on screen
   riseHeight = 70,      -- pixels a number floats up
   laneSpacing = 100,    -- percent of the normal side-by-side distance between hit types
+  numberGap = 4,        -- pixels between numbers stacked in the same column
   anchorX = 0,
   anchorY = 120,
   minimap = { show = true, angle = 200 },  -- angle in degrees around the minimap

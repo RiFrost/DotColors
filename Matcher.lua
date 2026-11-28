@@ -16,9 +16,10 @@ local PET_HIT_WINDOW = 0.3      -- a pet spell hits within this time of the pet'
 local DIRECT_ICON_WINDOW = 3    -- unmatched hits borrow the icon of a cast this recent
 local DURATION_GRACE = 3        -- keep a DoT a little past its duration for late ticks
 local FORGET_AFTER = 60         -- forget enemies not seen for this many seconds
+local WRACK_SPEEDUP = 2         -- Wrack makes Corruption, Agony and Siphon Life tick this much faster
 
 local enemies = {}  -- enemy key -> { dots = {}, petCast = ?, directCast = ?, lastSeen = time }
-local channel       -- { enemy = key, icon = texture } while Drain Life / Drain Soul is channeled
+local channel       -- { enemy = key, kind = hit type, icon = texture } while Drain or Wrack is channeled
 
 --- A stable key for a unit: its GUID, or a fallback when the GUID is hidden.
 function ns.enemyKey(unit)
@@ -80,15 +81,37 @@ function ns.onPetCast(spellID)
   enemyState(key).petCast = { time = GetTime(), kind = kind, icon = spellIcon(spellID) }
 end
 
---- Starts or stops treating Shadow hits as Drain Life / Drain Soul.
-function ns.onChannelStart(spellID)
-  local name = ns.spellName(spellID)
-  if name and ns.CHANNELED_SPELL_NAMES[name] then
-    channel = { enemy = ns.enemyKey("target"), icon = spellIcon(spellID) }
+--- True while Wrack is channeled on this enemy.
+local function isWracking(key)
+  return channel and channel.kind == "wrack" and channel.enemy == key
+end
+
+--- Stretches or squeezes the time since each Wrack-affected DoT last ticked.
+--- A DoT that was halfway to its next tick when its speed changes is still
+--- halfway there afterwards, so its next tick is predicted correctly.
+local function rescaleWrackedDots(key, factor)
+  local state = key and enemies[key]
+  if not state then return end
+  local now = GetTime()
+  for kind, dot in pairs(state.dots) do
+    if ns.DOTS[kind].fasterDuringWrack then
+      dot.lastTick = now - (now - dot.lastTick) * factor
+    end
   end
 end
 
+--- Starts treating Shadow hits on the target as the channeled spell.
+function ns.onChannelStart(spellID)
+  local name = ns.spellName(spellID)
+  local kind = name and ns.CHANNELED_SPELL_NAMES[name]
+  if not kind then return end
+  channel = { enemy = ns.enemyKey("target"), kind = kind, icon = spellIcon(spellID) }
+  if kind == "wrack" then rescaleWrackedDots(channel.enemy, 1 / WRACK_SPEEDUP) end
+end
+
+--- Stops the channel; DoTs sped up by Wrack return to their normal rhythm.
 function ns.onChannelStop()
+  if channel and channel.kind == "wrack" then rescaleWrackedDots(channel.enemy, WRACK_SPEEDUP) end
   channel = nil
 end
 
@@ -117,14 +140,16 @@ local function matchPetHit(state, school, now)
 end
 
 --- Matches a hit to the DoT whose expected tick is closest.
-local function matchDotTick(state, school, now)
+local function matchDotTick(key, state, school, now)
+  local wracking = isWracking(key)
   local bestKind, bestError
   for kind, dot in pairs(state.dots) do
     local info = ns.DOTS[kind]
     if now > dot.expires then
       state.dots[kind] = nil
     elseif info.school == school then
-      local err = tickError(dot, info.interval, now)
+      local interval = (wracking and info.fasterDuringWrack) and info.interval / WRACK_SPEEDUP or info.interval
+      local err = tickError(dot, interval, now)
       if err and err < TICK_TOLERANCE and (not bestError or err < bestError) then
         bestKind, bestError = kind, err
       end
@@ -149,12 +174,12 @@ function ns.classifyHit(key, school, now)
   if state then
     local kind, icon, err = matchPetHit(state, school, now)
     if kind then return kind, icon, err end
-    kind, icon, err = matchDotTick(state, school, now)
+    kind, icon, err = matchDotTick(key, state, school, now)
     if kind then return kind, icon, err end
   end
 
   if channel and channel.enemy == key and school == ns.SCHOOL.SHADOW then
-    return "drain", channel.icon
+    return channel.kind, channel.icon
   end
 
   local recentCast = state and state.directCast

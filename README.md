@@ -12,6 +12,9 @@ As a Warlock you have several DoTs ticking on the same target, and the default d
 | Siphon Life | teal |
 | Lash of Pain (Succubus) | pink |
 | Drain Life / Drain Soul | blue |
+| Wrack | crimson |
+
+Hits that can't be matched to one of these spells (for example Rain of Fire, Hellfire, Bane of Doom or direct spells like Shadow Bolt) appear as "Other Shadow" or "Other Fire".
 
 > **Status:** early development. Built and tested for Warlocks on WoW: Forever (interface 16001).
 
@@ -41,7 +44,7 @@ Open the options window by clicking the DotColors button at the edge of the mini
 The options window has four pages:
 
 - **General:** where numbers appear, icons, physical damage, hiding Blizzard's numbers, minimap button
-- **Display:** font size, display time, rise height, spacing between spells
+- **Display:** font size, display time, rise height, spacing between spells, gap between stacked numbers
 - **Colors:** click a color to change it, Shift-click for a sample number, right-click to reset it
 - **Position:** move the fixed anchor used when no nameplate is visible
 
@@ -75,6 +78,7 @@ DotColors combines the two. Every DoT ticks at a fixed rhythm after it is cast: 
 ## Known limitations
 
 - **Simultaneous ticks:** when two Shadow DoTs tick at exactly the same moment, both numbers appear, but their colors can be swapped.
+- **Wrack:** while you channel Wrack, Corruption, Bane of Agony and Siphon Life tick twice as fast and Wrack itself hits every second. With this many Shadow hits close together, colors are swapped more often.
 - **Another Warlock on the same target:** the game doesn't say who dealt the damage, so their ticks can be colored as yours.
 - **Dungeons:** the game restricts more data inside instances. Detection may be less reliable there.
 - **Damage amounts can't be summed or compared**, because they are secret values. Only how they are shown can change.
