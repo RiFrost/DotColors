@@ -104,8 +104,9 @@ L["Font size"] = "Schriftgröße"
 L["Display time"] = "Anzeigedauer"
 L["Rise height"] = "Steighöhe"
 L["Spacing between spells"] = "Abstand zwischen Zaubern"
-L["Each spell has its own column. Raise the spacing if numbers overlap."] =
-  "Jeder Zauber hat eine eigene Spalte. Überlappen sich Zahlen, den Abstand erhöhen."
+L["Gap between stacked numbers"] = "Abstand übereinander"
+L["Each spell has its own column. Numbers overlapping side by side: raise the spacing between spells. On top of each other: raise the gap."] =
+  "Jeder Zauber hat eine eigene Spalte. Überlappen Zahlen nebeneinander: Abstand zwischen Zaubern erhöhen. Übereinander: Abstand übereinander erhöhen."
 L["Critical hits are shown larger automatically. Use \"Preview\" below to see the effect."] =
   "Krits werden automatisch größer dargestellt. Mit \"Vorschau\" unten siehst du die Wirkung sofort."
 

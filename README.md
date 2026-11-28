@@ -44,7 +44,7 @@ Open the options window by clicking the DotColors button at the edge of the mini
 The options window has four pages:
 
 - **General:** where numbers appear, icons, physical damage, hiding Blizzard's numbers, minimap button
-- **Display:** font size, display time, rise height, spacing between spells
+- **Display:** font size, display time, rise height, spacing between spells, gap between stacked numbers
 - **Colors:** click a color to change it, Shift-click for a sample number, right-click to reset it
 - **Position:** move the fixed anchor used when no nameplate is visible
 

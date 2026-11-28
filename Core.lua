@@ -49,6 +49,7 @@ ns.DEFAULTS = {
   duration = 1.6,       -- seconds a number stays on screen
   riseHeight = 70,      -- pixels a number floats up
   laneSpacing = 100,    -- percent of the normal side-by-side distance between hit types
+  numberGap = 4,        -- pixels between numbers stacked in the same column
   anchorX = 0,
   anchorY = 120,
   minimap = { show = true, angle = 200 },  -- angle in degrees around the minimap

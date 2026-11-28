@@ -5,7 +5,7 @@ local _, ns = ...
 local L = ns.L
 local Widgets = ns.Widgets
 
-local WINDOW_WIDTH, WINDOW_HEIGHT = 640, 460
+local WINDOW_WIDTH, WINDOW_HEIGHT = 640, 490
 local PAGE_LIST_WIDTH = 160
 local LEFT = 26  -- left edge of a page's content
 
@@ -73,6 +73,7 @@ local function buildDisplayPage(page)
     { key = "duration",   label = L["Display time"], min = 0.6, max = 4,   step = 0.1, format = seconds },
     { key = "riseHeight", label = L["Rise height"],  min = 0,   max = 200, step = 5,   format = pixels },
     { key = "laneSpacing", label = L["Spacing between spells"], min = 50, max = 250, step = 10, format = percent },
+    { key = "numberGap",  label = L["Gap between stacked numbers"], min = 0, max = 40, step = 1, format = pixels },
   }
   for i, s in ipairs(sliders) do
     form:slider(page, {
@@ -81,7 +82,7 @@ local function buildDisplayPage(page)
       set = function(value) ns.db[s.key] = value end,
     }):SetPoint("TOPLEFT", LEFT + 4, -98 - (i - 1) * 48)
   end
-  local spacingNote = Widgets.note(page, L["Each spell has its own column. Raise the spacing if numbers overlap."], LEFT + 4, -288)
+  local spacingNote = Widgets.note(page, L["Each spell has its own column. Numbers overlapping side by side: raise the spacing between spells. On top of each other: raise the gap."], LEFT + 4, -336)
   local critNote = Widgets.note(page, L["Critical hits are shown larger automatically. Use \"Preview\" below to see the effect."], LEFT + 4, 0)
   critNote:ClearAllPoints()
   critNote:SetPoint("TOPLEFT", spacingNote, "BOTTOMLEFT", 0, -6)  -- follows the first note, however many lines it wraps to
