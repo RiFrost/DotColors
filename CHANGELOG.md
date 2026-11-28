@@ -2,7 +2,7 @@
 
 All notable changes to DotColors are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
-## Unreleased
+## 1.1.0 (2026-11-28)
 
 ### Added
 
