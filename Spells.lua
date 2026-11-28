@@ -13,11 +13,12 @@ ns.SCHOOL = {
 
 -- DoTs by kind. interval: seconds between ticks; duration: how long the DoT lasts.
 -- The rhythm was measured in game: Agony ticks every 2 s, the others every 3 s.
+-- fasterDuringWrack: the DoT ticks twice as fast on the target while Wrack is channeled.
 ns.DOTS = {
-  corruption = { interval = 3, duration = 18, school = ns.SCHOOL.SHADOW },
-  agony      = { interval = 2, duration = 24, school = ns.SCHOOL.SHADOW },
+  corruption = { interval = 3, duration = 18, school = ns.SCHOOL.SHADOW, fasterDuringWrack = true },
+  agony      = { interval = 2, duration = 24, school = ns.SCHOOL.SHADOW, fasterDuringWrack = true },
   immolate   = { interval = 3, duration = 15, school = ns.SCHOOL.FIRE },
-  siphon     = { interval = 3, duration = 30, school = ns.SCHOOL.SHADOW },
+  siphon     = { interval = 3, duration = 30, school = ns.SCHOOL.SHADOW, fasterDuringWrack = true },
 }
 
 -- One spell ID per spell. Every rank has its own ID, but all ranks share
@@ -39,10 +40,11 @@ local PET_SPELL_IDS = {
   petfire = 3110,  -- Firebolt (Imp)
 }
 
--- Channeled spells: every Shadow hit while channeling belongs to them.
+-- Channeled spells: every Shadow hit on the target while channeling belongs to them.
 local CHANNELED_SPELL_IDS = {
-  689,   -- Drain Life
-  1120,  -- Drain Soul
+  [689] = "drain",       -- Drain Life
+  [1120] = "drain",      -- Drain Soul
+  [1316697] = "wrack",   -- Wrack (Affliction talent, new in Forever)
 }
 
 -- Name lookups, filled by ns.loadSpellNames() once the game shares spell names.
@@ -77,8 +79,8 @@ function ns.loadSpellNames()
   for kind, spellID in pairs(PET_SPELL_IDS) do
     addSpellName(ns.PET_HIT_BY_SPELL_NAME, spellID, kind)
   end
-  for _, spellID in ipairs(CHANNELED_SPELL_IDS) do
-    addSpellName(ns.CHANNELED_SPELL_NAMES, spellID, true)
+  for spellID, kind in pairs(CHANNELED_SPELL_IDS) do
+    addSpellName(ns.CHANNELED_SPELL_NAMES, spellID, kind)
   end
 end
 
@@ -92,6 +94,7 @@ ns.KINDS = {
   { key = "lash",       label = L["Lash of Pain (pet)"],      lane = -90 },
   { key = "petfire",    label = L["Firebolt (pet)"],          lane = 25 },
   { key = "drain",      label = L["Drain Life / Drain Soul"], lane = 95 },
+  { key = "wrack",      label = L["Wrack"],                   lane = 95 },  -- never channeled together with Drain
   { key = "shadow",     label = L["Other Shadow"],            lane = 0 },
   { key = "fire",       label = L["Other Fire"],              lane = 0 },
   { key = "physical",   label = L["Physical"],                lane = 0 },

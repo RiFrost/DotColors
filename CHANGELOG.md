@@ -2,6 +2,13 @@
 
 All notable changes to DotColors are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- Wrack (Affliction talent) gets its own color
+- Corruption, Bane of Agony and Siphon Life are still matched while Wrack makes them tick twice as fast
+
 ## 1.0.0 (2026-11-24)
 
 First public release.

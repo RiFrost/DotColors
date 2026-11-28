@@ -158,7 +158,7 @@ CreateFrame("Frame"):SetScript("OnUpdate", animateNumbers)
 --- Shows one sample number of every main color, above the target or at the anchor.
 function ns.showPreview()
   local attachTo = ns.nameplateFor("target")
-  local kinds = { "corruption", "agony", "immolate", "lash", "siphon", "drain", "shadow", "physical" }
+  local kinds = { "corruption", "agony", "immolate", "lash", "siphon", "drain", "wrack", "shadow", "physical" }
   for i, kind in ipairs(kinds) do
     C_Timer.After((i - 1) * PREVIEW_STEP, function()
       ns.showNumber(kind, 100 + i * 11, kind == "immolate", nil, attachTo)
